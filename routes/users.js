@@ -38,7 +38,7 @@ router.post('/authenticate', function(req, res, next){
        User.comparePassword(password, user.password, (err, isMatch) => {
            if(err) throw err;
            if(isMatch){
-               var token = jwt.sign(user.toJSON(), config.secret,{
+               var token = jwt.sign({data: user}, config.secret,{
                    expiresIn: 604800 //1week
                });
                res.json({
@@ -59,8 +59,8 @@ router.post('/authenticate', function(req, res, next){
 });
 
 /*Profile  */
-router.get('/profile', function(req, res, next){
-    res.send("PROFILklk");
+router.get('/profile', passport.authenticate("jwt", {session: false}), function(req, res, next){
+    res.json({user: req.user})
 });
 
 
