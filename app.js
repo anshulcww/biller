@@ -16,7 +16,7 @@ mongoose.connection.on('error', function (err){
 });
 var app = express();
 
-var users = require('./api/routes/users.js')
+var users = require('./routes/users.js')
 //port number
 var port = process.env.PORT || 3000;
 
@@ -29,6 +29,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Body Parser Middleware
 app.use(bodyParser.json());
 
+/* passport middleware */
+app.use(passport.initialize());
+app.use(passport.session());
+require('./config/passport')(passport);
 app.use("/users", users);
 
 //Start Server
