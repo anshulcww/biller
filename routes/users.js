@@ -31,6 +31,7 @@ router.post('/authenticate', function(req, res, next){
    var password = req.body.password;
 
    User.getUserByUsername(username, (err, user) => {
+       console.log("anshul");
        if(err) throw err;
        if(!user){
            return res.json({success: false, msg: 'User not found'});
